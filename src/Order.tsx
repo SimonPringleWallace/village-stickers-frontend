@@ -1,5 +1,6 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent } from 'react';
 import { Select, Input, Container, DropdownProps, InputProps } from 'semantic-ui-react';
+import Navigation from './Navigation';
 
 const stickerOptions = [
     { key: 'bl', value: 'blueSheet', text: 'Blue (sheet of 6)' },
@@ -8,16 +9,21 @@ const stickerOptions = [
 
   // need to validate that we have a value for both
 
-const Order = () => {
-    const [stickerType, setStickerType ] = useState('');
-    const [stickerQty, setStickerQty] = useState(0)
+  interface OrderProps {
+    stickerType: string; 
+    stickerQty: number;
+    onChangeStickerQty(qty: string):void;
+    onChangeStickerType(type: string): void;
+  }
 
+const Order = ({stickerType, stickerQty, onChangeStickerQty, onChangeStickerType}: OrderProps) => {
+    
     const onCloseSelect = (e: React.SyntheticEvent<HTMLElement, Event>, data: DropdownProps) => {
-        setStickerType(data.value as string);
+        onChangeStickerType(data.value as string);
     }
 
     const onChangeQty = (event: ChangeEvent, data: InputProps) => {
-        setStickerQty(data.value)
+        onChangeStickerQty(data.value)
 
     }
     return (
