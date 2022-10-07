@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Form, Message } from 'semantic-ui-react'
-import { states } from './assets/states';
 
 const style = {
     display: 'flex',
@@ -8,8 +7,6 @@ const style = {
     flexWrap: 'wrap',
     width: 500
 }
-
-const stateOptions = states.map(state => ({ text: state, value: state }))
 
 const Checkout = () => {
     const [ userDetails, setUserDetails ] = useState({} as {[formValue: string]: string});

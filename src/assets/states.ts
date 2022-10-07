@@ -1,1 +1,18 @@
-export const states = [ 'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'];
+import SemanticCOLORS from 'semantic-ui-react';
+
+export const stickers = [
+    
+    {
+        name: 'Blue',
+        quantity: 'Sheet of 6',
+        description: 'Tag for 13 gallon bag up to 15lbs',
+        color: 'blue' as SemanticCOLORS.SemanticCOLORS,
+    },
+
+    {
+        name: 'Red',
+        quantity: 'Sheet of 6',
+        description: 'Tag for 13 gallon bag up to 15lbs',
+        color: 'red' as SemanticCOLORS.SemanticCOLORS,
+    }
+]
