@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Breadcrumb } from 'semantic-ui-react';
+import Checkout from '../Checkout';
 import Navigation from '../Navigation';
 import Order from '../Order';
 
 const sections = [
-    { key: 'Order', content: 'Order', link: true, active: true  },
-    { key: 'Details', content: 'Details', link: true },
+    { key: 'Order', content: 'Order', link: true },
+    { key: 'Checkout', content: 'Checkout', link: true },
     { key: 'Confirmation', content: 'Confirmation'},
   ]
 
@@ -19,6 +20,7 @@ const Home = () => {
     const [ stickerQty, setStickerQty] = useState('');
     const [ isNextDisabled, setIsNextDisabled ] = useState(false);
     const [ isBackDisabled, setIsBackDisabled ] = useState(false);
+    const [breadcrumbSections, setActiveBreadcrumbSection] = useState(sections)
 
     const onNext = () => {
         setCurrentStageIndex(currentStageIndex + 1)
@@ -41,6 +43,19 @@ const Home = () => {
         setIsBackDisabled(currentStageIndex === 0)
     }, [currentStageIndex, stickerQty, stickerType])
 
+    useEffect(()=> {
+        const sectionsWithActive = sections.map((section, i) => {
+            if(i === currentStageIndex) {
+                return {
+                    ...section, 
+                    active: true,
+                }
+            }
+            return section
+        })
+        setActiveBreadcrumbSection(sectionsWithActive)
+    }, [currentStageIndex])
+
 
     const getStep = () => {
         switch (currentStageIndex) {
@@ -55,7 +70,7 @@ const Home = () => {
                 )
             case 1: 
                     return (
-                        <div>foo!</div>
+                        <Checkout/>
                     )
         }
     }
@@ -64,7 +79,7 @@ const Home = () => {
         <>
             <Container textAlign='center' style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100vh', width: '500px'}}>
                 <Container>
-                    <Breadcrumb size='big' icon='right arrow' sections={sections} style={{marginBottom: '50px'}} />
+                    <Breadcrumb size='big' icon='right arrow' sections={breadcrumbSections} style={{marginBottom: '50px'}} />
                     {getStep()}
                     <Navigation
                         onBack={onBack}
