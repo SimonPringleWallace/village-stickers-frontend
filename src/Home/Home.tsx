@@ -5,12 +5,20 @@ import StickerCard from '../product-card/Card';
 
 
 const Home = () => {
-    const [ order, updateOrder ] = useState({});
+    const [ order, updateOrder ] = useState({} as {[type: string]: string});
 
     const onAddToCart = (type: string, quantity: string) => {
+        const newOrder = {...order} as {[type: string]: string}
+        
+        if(order[type] != null) {
+            console.log(order[type], quantity)
+            newOrder[type] = (parseInt(order[type]) + parseInt(quantity)).toString()
+        }
+        else {
+            newOrder[type] = quantity
+        }
         updateOrder({
-            ...order,
-            [type]: quantity
+            ...newOrder
         })
     }
 

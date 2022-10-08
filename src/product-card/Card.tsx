@@ -28,6 +28,11 @@ const StickerCard = ({name, unit, description, color, onAddToCart}: StickerCardP
         setQuantity(value as string)
     }
 
+    const addToCart = () => {
+        onAddToCart(name, quantity);
+        setQuantity('1');
+    }
+
     return(
         <Card color={color}>
         <Card.Content>
@@ -42,7 +47,7 @@ const StickerCard = ({name, unit, description, color, onAddToCart}: StickerCardP
         <Card.Content extra >
             <div style={{display: 'flex', justifyContent: 'space-around'}}>
                 <Dropdown placeholder={'Qty'} value={quantity} onChange={onQtyChange} style={{width: 'auto', minWidth: '70px'}} selection fluid options={makeOptions()}/>
-                <Button onClick={() => onAddToCart(name, quantity)}>
+                <Button onClick={addToCart}>
                     Add to Cart
                 </Button>
             </div>
