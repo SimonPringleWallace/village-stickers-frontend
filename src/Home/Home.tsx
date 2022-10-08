@@ -1,20 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { stickers } from '../assets/states';
 import Header from '../header/header';
 import StickerCard from '../product-card/Card';
 
 
 const Home = () => {
-    // header with logo and cart on either side
-    // ecom tickets with product info
-    // should add apollo for a ch
+    const [ order, updateOrder ] = useState({});
+
+    const onAddToCart = (type: string, quantity: string) => {
+        updateOrder({
+            ...order,
+            [type]: quantity
+        })
+    }
+
     const createStickerCards = () => {
         return stickers.map((sticker) => (
             <StickerCard
                 name={sticker.name}
-                quantity={sticker.quantity}
+                unit={sticker.quantity}
                 description={sticker.description}
                 color={sticker.color}
+                onAddToCart={onAddToCart}
             />
         ))
     }
@@ -22,7 +29,7 @@ const Home = () => {
 
     return (
         <>
-        <Header/>
+        <Header order={order}/>
         {createStickerCards()}
         </> 
     );

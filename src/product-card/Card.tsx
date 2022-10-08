@@ -1,16 +1,17 @@
-import React from 'react';
-import { Card, Button, Dropdown, SemanticCOLORS } from 'semantic-ui-react';
+import React, {useState} from 'react';
+import { Card, Button, Dropdown, SemanticCOLORS, DropdownProps } from 'semantic-ui-react';
 
 
 interface StickerCardProps {
     name: string;
-    quantity: string;
+    unit: string;
     description: string;
     color: SemanticCOLORS;
+    onAddToCart(type: string, quantity: string): void
 }
 
-const StickerCard = ({name, quantity, description, color}: StickerCardProps) => {
-    console.log(color)
+const StickerCard = ({name, unit, description, color, onAddToCart}: StickerCardProps) => {
+    const [quantity, setQuantity] = useState('1');
     const makeOptions = () => {
         const options = []
         for (let i = 1; i <= 10; i++) {
@@ -23,12 +24,16 @@ const StickerCard = ({name, quantity, description, color}: StickerCardProps) => 
         return options;
     }
 
+    const onQtyChange = (e: React.SyntheticEvent, { value }: DropdownProps) => {
+        setQuantity(value as string)
+    }
+
     return(
         <Card color={color}>
         <Card.Content>
           <Card.Header>{name}</Card.Header>
           <Card.Meta>
-            <span className='date'>{quantity}</span>
+            <span className='date'>{unit}</span>
           </Card.Meta>
           <Card.Description>
             {description}
@@ -36,8 +41,8 @@ const StickerCard = ({name, quantity, description, color}: StickerCardProps) => 
         </Card.Content>
         <Card.Content extra >
             <div style={{display: 'flex', justifyContent: 'space-around'}}>
-                <Dropdown placeholder={'Qty'} style={{width: 'auto', minWidth: '70px'}} selection fluid options={makeOptions()}/>
-                <Button>
+                <Dropdown placeholder={'Qty'} value={quantity} onChange={onQtyChange} style={{width: 'auto', minWidth: '70px'}} selection fluid options={makeOptions()}/>
+                <Button onClick={() => onAddToCart(name, quantity)}>
                     Add to Cart
                 </Button>
             </div>

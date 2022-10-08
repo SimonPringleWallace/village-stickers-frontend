@@ -8,6 +8,12 @@ import {
 
 import HomePage from './Home/Home';
 import reportWebVitals from './reportWebVitals';
+import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client';
+
+const client = new ApolloClient({
+  uri: 'https://flyby-gateway.herokuapp.com/',
+  cache: new InMemoryCache(),
+});
 
 const router = createBrowserRouter([
   {
@@ -24,7 +30,9 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <RouterProvider router={router}/>
+  <ApolloProvider client={client}>
+    <RouterProvider router={router}/>
+  </ApolloProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function

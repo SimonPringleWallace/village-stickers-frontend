@@ -1,4 +1,3 @@
-import { findByLabelText } from '@testing-library/react';
 import React from 'react';
 import { Icon } from 'semantic-ui-react';
 
@@ -12,11 +11,33 @@ const style = {
     padding: '0 50px',
 }
 
-const Header = () => {
+interface HeaderProps {
+    order: {
+        [type: string]: string
+    }
+}
+
+const Header = ({ order }: HeaderProps) => {
+
+    const getCartNumber = () => {
+
+        const cartItems = Object.values(order).reduce((acc, curr) => acc + parseInt(curr), 0)
+        
+        if(cartItems === 0) {
+            return ''
+        }
+        return cartItems.toString()
+    }
+    const cartNumber = getCartNumber()
     return (
         <div style={style}>
             <div>Red Hook Village Trash Stickers</div>
-            <Icon name="shopping cart"></Icon>
+            <div style={{display: 'flex'}}>
+                <Icon name="shopping cart"></Icon>
+                {(parseInt(cartNumber) > 0) && <div style={{backgroundColor: 'red', height: '15px', width: '15px', borderRadius: '10px', marginTop: '-3px', color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '10px'}}>
+                    {getCartNumber()}
+                </div>}
+            </div>
         </div>
     );
 }
