@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Card, Button, Dropdown, SemanticCOLORS, DropdownProps } from 'semantic-ui-react';
+import { Card, Button, Dropdown, SemanticCOLORS, DropdownProps, Icon } from 'semantic-ui-react';
 
 
 interface StickerCardProps {
@@ -34,7 +34,7 @@ const StickerCard = ({name, unit, description, color, onAddToCart}: StickerCardP
     }
 
     return(
-        <Card color={color}>
+        <Card style={{margin: '0 10px'}} color={color}>
         <Card.Content>
           <Card.Header>{name}</Card.Header>
           <Card.Meta>
@@ -47,8 +47,11 @@ const StickerCard = ({name, unit, description, color, onAddToCart}: StickerCardP
         <Card.Content extra >
             <div style={{display: 'flex', justifyContent: 'space-around'}}>
                 <Dropdown placeholder={'Qty'} value={quantity} onChange={onQtyChange} style={{width: 'auto', minWidth: '70px'}} selection fluid options={makeOptions()}/>
-                <Button onClick={addToCart}>
-                    Add to Cart
+                <Button animated="vertical" onClick={addToCart}>
+                    <Button.Content visible>Add to Cart</Button.Content>
+                    <Button.Content hidden>
+                        <Icon name='cart'/>
+                    </Button.Content>
                 </Button>
             </div>
         </Card.Content>

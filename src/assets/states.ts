@@ -12,7 +12,7 @@ export const stickers = [
     {
         name: 'Red',
         quantity: 'Sheet of 6',
-        description: 'Tag for 13 gallon bag up to 15lbs',
+        description: 'Tag for 30 gallon bag up to 50lbs',
         color: 'red' as SemanticCOLORS.SemanticCOLORS,
     }
 ]
