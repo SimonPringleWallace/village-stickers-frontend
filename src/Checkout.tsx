@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Form, Message } from 'semantic-ui-react'
+import { useOrder } from './hooks/useOrder';
+import { orderContext } from './state/orderContext';
 
 const style = {
     display: 'flex',
@@ -9,8 +11,11 @@ const style = {
 }
 
 const Checkout = () => {
+    const { order } = useContext(orderContext)
     const [ userDetails, setUserDetails ] = useState({} as {[formValue: string]: string});
     const [ isFormError, setIsFormError ] = useState(false); 
+
+    console.log('order', order)
     
     
     const handleChange = (key:string, e: React.SyntheticEvent<HTMLElement, Event>, { value }: any) => {
@@ -46,7 +51,7 @@ const Checkout = () => {
             <Form.Input onChange={(e, data) => handleChange('state', e, data)} required label='State' placeholder='State'
           />
             </Form.Group>
-            <Form.Button enabled>Submit</Form.Button>
+            <Form.Button enabled="true">Submit</Form.Button>
             <Message
                 error
                 header='Require Fields'

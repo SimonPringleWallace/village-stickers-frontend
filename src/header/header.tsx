@@ -13,7 +13,7 @@ const style = {
 
 interface HeaderProps {
     order: {
-        [type: string]: string
+        [type: string]: number
     }
     onCartClick(): void;
 }
@@ -29,7 +29,7 @@ const Header = ({ order, onCartClick }: HeaderProps) => {
 
     const getCartNumber = () => {
 
-        const cartItems = Object.values(order).reduce((acc, curr) => acc + parseInt(curr), 0)
+        const cartItems = Object.values(order).reduce((acc, curr) => acc + curr, 0)
         
         if(cartItems === 0) {
             return ''
@@ -39,9 +39,11 @@ const Header = ({ order, onCartClick }: HeaderProps) => {
     const cartNumber = getCartNumber()
     return (
         <div style={style}>
-            <div>Red Hook Village Trash Stickers</div>
+            <div>
+                Red Hook Village Trash Stickers
+            </div>
             <div style={cartStyle} onClick={onCartClick}>
-                <Icon name="shopping cart"></Icon>
+                <Icon size='large' style={{cursor: 'pointer'}} name="shopping cart"></Icon>
                 {(parseInt(cartNumber) > 0) && <div style={{backgroundColor: 'red', height: '15px', width: '15px', borderRadius: '10px', marginTop: '-3px', color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '10px'}}>
                     {getCartNumber()}
                 </div>}

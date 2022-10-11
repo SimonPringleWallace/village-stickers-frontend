@@ -6,31 +6,32 @@ interface StickerCardProps {
     name: string;
     unit: string;
     description: string;
+    price: number
     color: SemanticCOLORS;
-    onAddToCart(type: string, quantity: string): void
+    onAddToCart(type: string, quantity: number): void
 }
 
-const StickerCard = ({name, unit, description, color, onAddToCart}: StickerCardProps) => {
-    const [quantity, setQuantity] = useState('1');
+const StickerCard = ({name, unit, description, color, price, onAddToCart}: StickerCardProps) => {
+    const [quantity, setQuantity] = useState(1);
     const makeOptions = () => {
         const options = []
         for (let i = 1; i <= 10; i++) {
             options.push({
                 key: i,
                 text: i.toString(),
-                value: i.toString(),
+                value: i,
             })
         }
         return options;
     }
 
     const onQtyChange = (e: React.SyntheticEvent, { value }: DropdownProps) => {
-        setQuantity(value as string)
+        setQuantity(value as number)
     }
 
     const addToCart = () => {
         onAddToCart(name, quantity);
-        setQuantity('1');
+        setQuantity(1);
     }
 
     return(
@@ -42,6 +43,9 @@ const StickerCard = ({name, unit, description, color, onAddToCart}: StickerCardP
           </Card.Meta>
           <Card.Description>
             {description}
+          </Card.Description>
+          <Card.Description>
+            {`$${price.toFixed(2).toString()}`}
           </Card.Description>
         </Card.Content>
         <Card.Content extra >
