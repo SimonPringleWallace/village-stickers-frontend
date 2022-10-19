@@ -1,12 +1,12 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { useOrder } from './hooks/useOrder';
 import { orderContext } from './state/orderContext';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
-import Checkout from './Checkout';
+import Checkout from './checkout/Checkout';
 import HomePage from './Home/Home';
+import Confirmation from './confirmation/Confirmation';
 
 function App() {
   const order = useOrder();
@@ -29,7 +29,11 @@ function App() {
     {
       path: "/checkout",
       element: <Checkout/>,
-    }
+    },
+    {
+      path: "/confirmation",
+      element: <Confirmation/>,
+    },
   ]);
   
   return (
