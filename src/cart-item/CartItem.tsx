@@ -5,30 +5,29 @@ import QuanityStepper from '../quantity-stepper/QuantityStepper';
 
 interface CartItemProps {
     quantity: number;
-    tagKey: string;
+    productId: string;
     onUpdateQuantity( tagKey: string, direction: 'increment' | 'decrement'): void
     onRemoveCartItem(tagKey: string): void
 }
 
-const CartItem = ({ onUpdateQuantity, quantity, tagKey, onRemoveCartItem }: CartItemProps) => {
+const CartItem = ({ onUpdateQuantity, quantity, productId, onRemoveCartItem }: CartItemProps) => {
     const tags = useContext(TagContext)
-    console.log('tags', tags)
-    const price = tags.find((tag) => tag.title == tagKey)?.price ?? 0
+    const {price, title } = tags.find((tag) => tag.id == productId) ?? {}
     return(
             <Card fluid>
                 <Card.Content textAlign='left' style={{display: 'flex'}}>
                     <div>
-                        <Card.Header content={tagKey} />
+                        <Card.Header content={title} />
                         <Card.Meta content='Sheet of 6' />
                     </div>
                     <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
-                        <Card.Header style={{marginLeft: '140px'}} content={`$${(quantity * price).toFixed(2)}`} />        
+                        <Card.Header style={{marginLeft: '140px'}} content={`$${(quantity * (price ?? 1)).toFixed(2)}`} />        
                     </div>
                 </Card.Content>
                 <Card.Content extra>
                     <div style={{display: 'flex', alignItems: 'center'}}>
-                        <QuanityStepper tagKey={tagKey} quantity={quantity} onUpdateQuantity={onUpdateQuantity}/>
-                        <p onClick={() => onRemoveCartItem(tagKey)} style={{marginLeft: '20px', color:'red', cursor: 'pointer'}}>remove</p>       
+                        <QuanityStepper tagKey={productId} quantity={quantity} onUpdateQuantity={onUpdateQuantity}/>
+                        <p onClick={() => onRemoveCartItem(productId)} style={{marginLeft: '20px', color:'red', cursor: 'pointer'}}>remove</p>       
                     </div>
                 </Card.Content>
             </Card>

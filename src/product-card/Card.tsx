@@ -3,15 +3,16 @@ import { Card, Button, Dropdown, SemanticCOLORS, DropdownProps, Icon } from 'sem
 
 
 interface StickerCardProps {
+    id: string;
     name: string;
     unit: string;
     description: string;
     price: number
     color: SemanticCOLORS;
-    onAddToCart(type: string, quantity: number): void
+    onAddToCart(id: string, quantity: number): void
 }
 
-const StickerCard = ({name, unit, description, color, price, onAddToCart}: StickerCardProps) => {
+const StickerCard = ({id, name, unit, description, color, price, onAddToCart}: StickerCardProps) => {
     const [quantity, setQuantity] = useState(1);
     const makeOptions = () => {
         const options = []
@@ -30,7 +31,7 @@ const StickerCard = ({name, unit, description, color, price, onAddToCart}: Stick
     }
 
     const addToCart = () => {
-        onAddToCart(name, quantity);
+        onAddToCart(id, quantity);
         setQuantity(1);
     }
 

@@ -19,29 +19,35 @@ const Cart = ({ isSidebarVisible, onHide, stickers, hasCheckoutBtn, isCloseable 
     const { order, setCurrentOrder } = useContext(orderContext)
     const navigate = useNavigate();
     
-    const onUpdateQuantity = (tagKey: string, direction: 'increment' | 'decrement') => {
-    const currValue = order[tagKey];
+    const onUpdateQuantity = (id: string, direction: 'increment' | 'decrement') => {
+    const currValue = order[id].quantity;
 
 
         if(direction === 'increment') {
             setCurrentOrder({
                 ...order,
-                [tagKey]: currValue + 1
+                [id]: {
+                    ...order[id],
+                    quantity: order[id].quantity + 1
+                }
             })
         }
-        else if (order[tagKey] > 0) {
+        else if (order[id].quantity > 0) {
             setCurrentOrder({
                 ...order,
-                [tagKey]: currValue - 1
+                [id]: {
+                    ...order[id],
+                    quantity: order[id].quantity - 1
+                }
             })
         }
     }
 
-    const removeCartItem = (tagKey: string) => {
+    const removeCartItem = (id: string) => {
         const newOrder = {} as IOrder
-        Object.keys(order).forEach((key) => {
-            if (key !== tagKey) {
-                newOrder[key] = order[tagKey]
+        Object.keys(order).forEach((productId) => {
+            if (productId !== id) {
+                newOrder[id] = {...order[id]}
             }
         })
         setCurrentOrder(newOrder)
@@ -52,13 +58,14 @@ const Cart = ({ isSidebarVisible, onHide, stickers, hasCheckoutBtn, isCloseable 
             return;
         }
         let total = 0;
-        console.log('order', order)
-        Object.keys(order).forEach((key) => {
-            total += stickers.find((tag) => tag.title == key)!.price * order[key]
+        Object.keys(order).forEach((productId: string) => {
+            total += stickers.find((tag) => tag.id == productId)!.price * order[productId].quantity
         })
     
         return (total).toFixed(2);
     }
+
+    console.log(order)
 
     return (
         <Sidebar
@@ -75,8 +82,8 @@ const Cart = ({ isSidebarVisible, onHide, stickers, hasCheckoutBtn, isCloseable 
                 <Header style={{margin: 0}} size='huge'> Cart</Header>
                 {isCloseable && <Button onClick={onHide} style={{background: 'none', fontSize: '26px', fontWeight: 100, height: 40, width: 40, padding: 0}}>X</Button>}
             </div>
-            {Object.keys(order).map((orderItem, i) => (
-                <CartItem key={i} tagKey={orderItem} quantity={order[orderItem]} onUpdateQuantity={onUpdateQuantity} onRemoveCartItem={removeCartItem}/>
+            {Object.keys(order).map((productId, i) => (
+                <CartItem key={i} productId={productId} quantity={order[productId].quantity} onUpdateQuantity={onUpdateQuantity} onRemoveCartItem={removeCartItem}/>
             ))}
 
             <Header style={{marginRight: 10}} textAlign='right' size='medium'>Total</Header>

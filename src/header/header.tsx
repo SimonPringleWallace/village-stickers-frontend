@@ -1,5 +1,6 @@
 import React from 'react';
 import { Icon } from 'semantic-ui-react';
+import { IOrder } from '../interfaces';
 
 const style = {
     height: 30,
@@ -12,9 +13,7 @@ const style = {
 }
 
 interface HeaderProps {
-    order: {
-        [type: string]: number
-    }
+    order: IOrder;
     onCartClick(): void;
 }
 
@@ -29,7 +28,7 @@ const Header = ({ order, onCartClick }: HeaderProps) => {
 
     const getCartNumber = () => {
 
-        const cartItems = Object.values(order).reduce((acc, curr) => acc + curr, 0)
+        const cartItems = Object.values(order).reduce((acc, curr) => acc + curr.quantity, 0)
         
         if(cartItems === 0) {
             return ''
