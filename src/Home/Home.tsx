@@ -57,14 +57,16 @@ const Home = () => {
 
 
     useEffect(() => {
-        // const fetchTags = async() => {
-        //     const res = await fetch('http://localhost:8080/tags')
-        //     const json = await res.json();
-        //     setStickers(json)
-        // }
-        // fetchTags();
-        setStickers(tags)
+        const fetchTags = async() => {
+            const res = await fetch('http://localhost:8080/tags')
+            const json = await res.json();
+            setStickers(json)
+        }
+        fetchTags();
+        // setStickers(tags)
     }, [])
+
+    console.log(stickers)
 
     return (
         <>

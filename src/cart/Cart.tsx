@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Sidebar, Menu, Button, Icon, Header } from 'semantic-ui-react';
 import CartItem from '../cart-item/CartItem';
+import { TagContext } from '../Home/Home';
 import { ITag } from '../Home/interfaces';
 import { IOrder } from '../interfaces';
 import { orderContext } from '../state/orderContext';
@@ -68,7 +69,7 @@ const Cart = ({ isSidebarVisible, onHide, stickers, hasCheckoutBtn, isCloseable 
     }
     const onClickCheckout = () => {
         setIsCheckoutLoading(true)
-        postData(order)
+        postData(order, stickers)
     } 
 
     return (

@@ -5,5 +5,5 @@ export interface ITag {
     price: number;
     unit: string;
     color: string;
-    
+    priceKey: string;
 }
