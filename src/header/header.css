@@ -1,0 +1,27 @@
+.home-icon {
+    overflow-wrap:break-word;
+    width: 165px;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.header-container {
+    margin-left: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+@media (max-width:800px) {
+    .home-icon {
+        width: 112px;
+        font-size: 12px;
+    }
+
+    .header-container {
+        margin-left: 0px;
+        padding: 10px 0;
+    }
+}

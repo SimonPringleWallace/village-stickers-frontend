@@ -33,15 +33,27 @@ const Checkout = () => {
         }) 
     }
 
-    const postData = async(url = 'http://localhost:8080/stripe', data = {}) => {
+    const buildOrderPayload = () => {
+        const orderPayload = [] as {id: string; type: string; quantity: number}[];
+        Object.keys(order).forEach(productId => {
+            orderPayload.push({
+                id: productId,
+                type: order[productId].type,
+                quantity: order[productId].quantity
+            })
+        })  
+        return orderPayload;      
+    }
+
+    const postData = async() => {
         setIsLoading(true)
-        const response = await fetch(url, {
+        const response = await fetch('http://localhost:8080/stripe', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'applicaiton/json',
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify({user: {...userDetails, spam: ''}, order: buildOrderPayload()})
         });
 
         const checkoutUrl = await response.json();
@@ -56,8 +68,6 @@ const Checkout = () => {
         }
         fetchTags();
     }, [])
-
-    console.log('stickers!', stickers)
 
     return (
         <TagContext.Provider value={stickers}>

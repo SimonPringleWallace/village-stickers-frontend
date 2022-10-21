@@ -6,6 +6,8 @@ import { ITag } from './interfaces';
 import { IOrder } from '../interfaces';
 import { orderContext } from '../state/orderContext';
 import Cart from '../cart/Cart';
+import TrashCan from '../assets/can_of_trash.png';
+import './home.css';
 
 export const TagContext = React.createContext([] as ITag[]);
 const Home = () => {
@@ -13,14 +15,17 @@ const Home = () => {
     const [isSidebarVisible, setIsSidebarVisible] = useState(false);
     const [stickers, setStickers] = useState([] as ITag[]);
 
-    const onAddToCart = (type: string, quantity: number) => {
+    const onAddToCart = (id: string, quantity: number) => {
         const newOrder = {...order} as IOrder
         
-        if(order[type] != null) {
-            newOrder[type] = order[type] + quantity;
+        if(order[id] != null) {
+            newOrder[id].quantity = order[id].quantity + quantity;
         }
         else {
-            newOrder[type] = quantity
+            newOrder[id] = {
+                type: stickers.find(sticker => sticker.id === id)!.title,
+                quantity
+            }
         }
         setCurrentOrder({
             ...newOrder
@@ -29,10 +34,11 @@ const Home = () => {
             setIsSidebarVisible(true)
         }
     }
-
+    console.log(stickers)
     const createStickerCards = () => {
         return stickers.map((sticker) => (
             <StickerCard
+                id={sticker.id}
                 key={sticker.title}
                 name={sticker.title}
                 unit={sticker.unit}
@@ -62,16 +68,21 @@ const Home = () => {
         <>
         <TagContext.Provider value={stickers}>  
             <Header order={order} onCartClick={() => setIsSidebarVisible(!isSidebarVisible)}/>
-            <div style={{height: '200px'}}></div>
-            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+        <div className='home-container'>
+            <div className='hero'>
+                <img src={TrashCan}/>
+                <p> Buying Trash Tags Shouldn't Stink!</p>
+            </div>
+            <div className='tag-container'>
                 {createStickerCards()}
             </div>
-            <Cart
-                isSidebarVisible={isSidebarVisible}
-                onHide={() => onCloseSidebar()}
-                stickers={stickers}
-                hasCheckoutBtn={true}
-            />
+        </div>
+        <Cart
+            isSidebarVisible={isSidebarVisible}
+            onHide={() => onCloseSidebar()}
+            stickers={stickers}
+            hasCheckoutBtn={true}
+        />
         </TagContext.Provider>
         </> 
     );

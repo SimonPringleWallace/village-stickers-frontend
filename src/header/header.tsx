@@ -1,9 +1,9 @@
 import React from 'react';
 import { Icon } from 'semantic-ui-react';
+import { IOrder } from '../interfaces';
+import './header.css'
 
 const style = {
-    height: 30,
-    width: '100%',
     display: 'flex',
     flexDirection: 'row' as const,
     justifyContent: 'space-between',
@@ -12,9 +12,7 @@ const style = {
 }
 
 interface HeaderProps {
-    order: {
-        [type: string]: number
-    }
+    order: IOrder;
     onCartClick(): void;
 }
 
@@ -29,7 +27,7 @@ const Header = ({ order, onCartClick }: HeaderProps) => {
 
     const getCartNumber = () => {
 
-        const cartItems = Object.values(order).reduce((acc, curr) => acc + curr, 0)
+        const cartItems = Object.values(order).reduce((acc, curr) => acc + curr.quantity, 0)
         
         if(cartItems === 0) {
             return ''
@@ -38,8 +36,8 @@ const Header = ({ order, onCartClick }: HeaderProps) => {
     }
     const cartNumber = getCartNumber()
     return (
-        <div style={style}>
-            <div>
+        <div className='header-container'>
+            <div className='home-icon'>
                 Red Hook Village Trash Stickers
             </div>
             <div style={cartStyle} onClick={onCartClick}>

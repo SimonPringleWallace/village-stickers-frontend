@@ -3,15 +3,16 @@ import { Card, Button, Dropdown, SemanticCOLORS, DropdownProps, Icon } from 'sem
 
 
 interface StickerCardProps {
+    id: string;
     name: string;
     unit: string;
     description: string;
     price: number
     color: SemanticCOLORS;
-    onAddToCart(type: string, quantity: number): void
+    onAddToCart(id: string, quantity: number): void
 }
 
-const StickerCard = ({name, unit, description, color, price, onAddToCart}: StickerCardProps) => {
+const StickerCard = ({id, name, unit, description, color, price, onAddToCart}: StickerCardProps) => {
     const [quantity, setQuantity] = useState(1);
     const makeOptions = () => {
         const options = []
@@ -29,13 +30,14 @@ const StickerCard = ({name, unit, description, color, price, onAddToCart}: Stick
         setQuantity(value as number)
     }
 
-    const addToCart = () => {
-        onAddToCart(name, quantity);
+    const addToCart = (e: React.SyntheticEvent) => {
+        e.stopPropagation();
+        onAddToCart(id, quantity);
         setQuantity(1);
     }
 
     return(
-        <Card style={{margin: '0 10px'}} color={color}>
+        <Card color={color}>
         <Card.Content>
           <Card.Header>{name}</Card.Header>
           <Card.Meta>
@@ -51,7 +53,7 @@ const StickerCard = ({name, unit, description, color, price, onAddToCart}: Stick
         <Card.Content extra >
             <div style={{display: 'flex', justifyContent: 'space-around'}}>
                 <Dropdown placeholder={'Qty'} value={quantity} onChange={onQtyChange} style={{width: 'auto', minWidth: '70px'}} selection fluid options={makeOptions()}/>
-                <Button animated="vertical" onClick={addToCart}>
+                <Button color='blue' animated="vertical" onClick={addToCart}>
                     <Button.Content visible>Add to Cart</Button.Content>
                     <Button.Content hidden>
                         <Icon name='cart'/>
