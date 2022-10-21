@@ -8,6 +8,7 @@ import { orderContext } from '../state/orderContext';
 import Cart from '../cart/Cart';
 import TrashCan from '../assets/can_of_trash.png';
 import './home.css';
+import { tags } from '../tags';
 
 export const TagContext = React.createContext([] as ITag[]);
 const Home = () => {
@@ -56,12 +57,13 @@ const Home = () => {
 
 
     useEffect(() => {
-        const fetchTags = async() => {
-            const res = await fetch('http://localhost:8080/tags')
-            const json = await res.json();
-            setStickers(json)
-        }
-        fetchTags();
+        // const fetchTags = async() => {
+        //     const res = await fetch('http://localhost:8080/tags')
+        //     const json = await res.json();
+        //     setStickers(json)
+        // }
+        // fetchTags();
+        setStickers(tags)
     }, [])
 
     return (
