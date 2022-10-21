@@ -1,97 +1,79 @@
-import React, { useState, useEffect } from 'react';
-import { Container, Breadcrumb } from 'semantic-ui-react';
-import Checkout from '../Checkout';
-import Navigation from '../Navigation';
-import Order from '../Order';
+import React, { useContext, useEffect, useState } from 'react';
+import Header from '../header/header';
+import StickerCard from '../product-card/Card';
+import { SemanticCOLORS } from 'semantic-ui-react';
+import { ITag } from './interfaces';
+import { IOrder } from '../interfaces';
+import { orderContext } from '../state/orderContext';
+import Cart from '../cart/Cart';
 
-const sections = [
-    { key: 'Order', content: 'Order', link: true },
-    { key: 'Checkout', content: 'Checkout', link: true },
-    { key: 'Confirmation', content: 'Confirmation'},
-  ]
-
-const stages = ['order', 'detail', 'confirmation'];
-
-
-
+export const TagContext = React.createContext([] as ITag[]);
 const Home = () => {
-    const [ currentStageIndex, setCurrentStageIndex ] = useState(0)
-    const [ stickerType, setStickerType ] = useState('');
-    const [ stickerQty, setStickerQty] = useState('');
-    const [ isNextDisabled, setIsNextDisabled ] = useState(false);
-    const [ isBackDisabled, setIsBackDisabled ] = useState(false);
-    const [breadcrumbSections, setActiveBreadcrumbSection] = useState(sections)
+    const { order, setCurrentOrder } = useContext(orderContext)
+    const [isSidebarVisible, setIsSidebarVisible] = useState(false);
+    const [stickers, setStickers] = useState([] as ITag[]);
 
-    const onNext = () => {
-        setCurrentStageIndex(currentStageIndex + 1)
-    }
-
-    const onBack = () => {
-        setCurrentStageIndex(currentStageIndex - 1)
-    }
-
-    const onChangeStickerType = (value: string) => {
-        setStickerType(value)
-    }
-
-    const onChangeStickerQty = (value: string) => {
-        setStickerQty(value)
-    }
-
-    useEffect(() => {
-        setIsNextDisabled(currentStageIndex === stages.length - 1 || stickerType === '' || stickerQty === '0' || stickerQty == '')
-        setIsBackDisabled(currentStageIndex === 0)
-    }, [currentStageIndex, stickerQty, stickerType])
-
-    useEffect(()=> {
-        const sectionsWithActive = sections.map((section, i) => {
-            if(i === currentStageIndex) {
-                return {
-                    ...section, 
-                    active: true,
-                }
-            }
-            return section
+    const onAddToCart = (type: string, quantity: number) => {
+        const newOrder = {...order} as IOrder
+        
+        if(order[type] != null) {
+            newOrder[type] = order[type] + quantity;
+        }
+        else {
+            newOrder[type] = quantity
+        }
+        setCurrentOrder({
+            ...newOrder
         })
-        setActiveBreadcrumbSection(sectionsWithActive)
-    }, [currentStageIndex])
-
-
-    const getStep = () => {
-        switch (currentStageIndex) {
-            case 0:
-                return (
-                    <Order
-                        onChangeStickerType={onChangeStickerType}
-                        stickerType={stickerType}
-                        stickerQty={parseInt(stickerQty)}
-                        onChangeStickerQty={onChangeStickerQty}
-                    /> 
-                )
-            case 1: 
-                    return (
-                        <Checkout/>
-                    )
+        if(!isSidebarVisible) {
+            setIsSidebarVisible(true)
         }
     }
 
+    const createStickerCards = () => {
+        return stickers.map((sticker) => (
+            <StickerCard
+                key={sticker.title}
+                name={sticker.title}
+                unit={sticker.unit}
+                description={sticker.description}
+                color={sticker.color as SemanticCOLORS}
+                onAddToCart={onAddToCart}
+                price={sticker.price}
+            />
+        ))
+    }
+
+    const onCloseSidebar = () => {
+        setIsSidebarVisible(false)
+    }
+
+
+    useEffect(() => {
+        const fetchTags = async() => {
+            const res = await fetch('http://localhost:8080/tags')
+            const json = await res.json();
+            setStickers(json)
+        }
+        fetchTags();
+    }, [])
+
     return (
         <>
-            <Container textAlign='center' style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100vh', width: '500px'}}>
-                <Container>
-                    <Breadcrumb size='big' icon='right arrow' sections={breadcrumbSections} style={{marginBottom: '50px'}} />
-                    {getStep()}
-                    <Navigation
-                        onBack={onBack}
-                        onNext={onNext}
-                        backDisabled={isBackDisabled}
-                        nextDisabled={isNextDisabled}
-                    />
-                </Container>
-            </Container>
-        </>
-
-        // next should be disabled until 
+        <TagContext.Provider value={stickers}>  
+            <Header order={order} onCartClick={() => setIsSidebarVisible(!isSidebarVisible)}/>
+            <div style={{height: '200px'}}></div>
+            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+                {createStickerCards()}
+            </div>
+            <Cart
+                isSidebarVisible={isSidebarVisible}
+                onHide={() => onCloseSidebar()}
+                stickers={stickers}
+                hasCheckoutBtn={true}
+            />
+        </TagContext.Provider>
+        </> 
     );
 }
 

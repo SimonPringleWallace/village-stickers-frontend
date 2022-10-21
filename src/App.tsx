@@ -1,24 +1,48 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { useOrder } from './hooks/useOrder';
+import { orderContext } from './state/orderContext';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import Checkout from './checkout/Checkout';
+import HomePage from './Home/Home';
+import Confirmation from './confirmation/Confirmation';
 
 function App() {
+  const order = useOrder();
+  console.log('order app', order.order)
+
+  const client = new ApolloClient({
+    uri: 'https://flyby-gateway.herokuapp.com/',
+    cache: new InMemoryCache(),
+  });
+  
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <HomePage/>,
+    },
+    {
+      path: "/admin",
+      element: <div>admin page</div>,
+    },
+    {
+      path: "/checkout",
+      element: <Checkout/>,
+    },
+    {
+      path: "/confirmation",
+      element: <Confirmation/>,
+    },
+  ]);
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ApolloProvider client={client}>
+        <orderContext.Provider value={order}>
+          <RouterProvider router={router}/>
+        </orderContext.Provider>
+      </ApolloProvider>
     </div>
   );
 }
