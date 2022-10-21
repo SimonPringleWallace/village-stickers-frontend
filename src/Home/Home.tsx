@@ -58,7 +58,9 @@ const Home = () => {
 
     useEffect(() => {
         const fetchTags = async() => {
-            const res = await fetch('http://localhost:8080/tags')
+            const res = await fetch(`${process.env.NODE_ENV === 'development'
+                ? process.env.REACT_APP_WEB_BACKEND_LOCAL
+                : process.env.REACT_APP_WEB_BACKEND_API}/tags`)
             const json = await res.json();
             setStickers(json)
         }

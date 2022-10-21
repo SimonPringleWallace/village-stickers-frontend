@@ -17,7 +17,9 @@ const buildOrderPayload = (order: IOrder, stickers: ITag[]) => {
 }
 
 const postData = async(order: IOrder, stickers: ITag[]) => {
-    const response = await fetch('http://localhost:8080/stripe', {
+    const response = await fetch(`${process.env.NODE_ENV === 'development'
+    ? process.env.REACT_APP_WEB_BACKEND_LOCAL
+    : process.env.REACT_APP_WEB_BACKEND_API}/stripe`, {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
