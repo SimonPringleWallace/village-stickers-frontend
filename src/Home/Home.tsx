@@ -6,6 +6,8 @@ import { ITag } from './interfaces';
 import { IOrder } from '../interfaces';
 import { orderContext } from '../state/orderContext';
 import Cart from '../cart/Cart';
+import TrashCan from '../assets/can_of_trash.png';
+import './home.css';
 
 export const TagContext = React.createContext([] as ITag[]);
 const Home = () => {
@@ -66,16 +68,21 @@ const Home = () => {
         <>
         <TagContext.Provider value={stickers}>  
             <Header order={order} onCartClick={() => setIsSidebarVisible(!isSidebarVisible)}/>
-            <div style={{height: '200px'}}></div>
-            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+        <div className='home-container'>
+            <div className='hero'>
+                <img src={TrashCan}/>
+                <p> Buying Trash Tags Shouldn't Stink!</p>
+            </div>
+            <div className='tag-container'>
                 {createStickerCards()}
             </div>
-            <Cart
-                isSidebarVisible={isSidebarVisible}
-                onHide={() => onCloseSidebar()}
-                stickers={stickers}
-                hasCheckoutBtn={true}
-            />
+        </div>
+        <Cart
+            isSidebarVisible={isSidebarVisible}
+            onHide={() => onCloseSidebar()}
+            stickers={stickers}
+            hasCheckoutBtn={true}
+        />
         </TagContext.Provider>
         </> 
     );

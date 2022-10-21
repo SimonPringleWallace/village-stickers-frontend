@@ -27,10 +27,6 @@ function App() {
       element: <div>admin page</div>,
     },
     {
-      path: "/checkout",
-      element: <Checkout/>,
-    },
-    {
       path: "/confirmation",
       element: <Confirmation/>,
     },

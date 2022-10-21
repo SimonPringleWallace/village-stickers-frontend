@@ -30,13 +30,14 @@ const StickerCard = ({id, name, unit, description, color, price, onAddToCart}: S
         setQuantity(value as number)
     }
 
-    const addToCart = () => {
+    const addToCart = (e: React.SyntheticEvent) => {
+        e.stopPropagation();
         onAddToCart(id, quantity);
         setQuantity(1);
     }
 
     return(
-        <Card style={{margin: '0 10px'}} color={color}>
+        <Card color={color}>
         <Card.Content>
           <Card.Header>{name}</Card.Header>
           <Card.Meta>
@@ -52,7 +53,7 @@ const StickerCard = ({id, name, unit, description, color, price, onAddToCart}: S
         <Card.Content extra >
             <div style={{display: 'flex', justifyContent: 'space-around'}}>
                 <Dropdown placeholder={'Qty'} value={quantity} onChange={onQtyChange} style={{width: 'auto', minWidth: '70px'}} selection fluid options={makeOptions()}/>
-                <Button animated="vertical" onClick={addToCart}>
+                <Button color='blue' animated="vertical" onClick={addToCart}>
                     <Button.Content visible>Add to Cart</Button.Content>
                     <Button.Content hidden>
                         <Icon name='cart'/>

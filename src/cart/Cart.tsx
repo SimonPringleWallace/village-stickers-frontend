@@ -1,10 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Sidebar, Menu, Button, Icon, Header } from 'semantic-ui-react';
 import CartItem from '../cart-item/CartItem';
 import { ITag } from '../Home/interfaces';
 import { IOrder } from '../interfaces';
 import { orderContext } from '../state/orderContext';
+import postData from './cartUtils';
 
 
 interface ICartProps {
@@ -17,6 +18,7 @@ interface ICartProps {
 
 const Cart = ({ isSidebarVisible, onHide, stickers, hasCheckoutBtn, isCloseable = true }: ICartProps) => {
     const { order, setCurrentOrder } = useContext(orderContext)
+    const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
     const navigate = useNavigate();
     
     const onUpdateQuantity = (id: string, direction: 'increment' | 'decrement') => {
@@ -64,8 +66,10 @@ const Cart = ({ isSidebarVisible, onHide, stickers, hasCheckoutBtn, isCloseable 
     
         return (total).toFixed(2);
     }
-
-    console.log(order)
+    const onClickCheckout = () => {
+        setIsCheckoutLoading(true)
+        postData(order)
+    } 
 
     return (
         <Sidebar
@@ -88,7 +92,7 @@ const Cart = ({ isSidebarVisible, onHide, stickers, hasCheckoutBtn, isCloseable 
 
             <Header style={{marginRight: 10}} textAlign='right' size='medium'>Total</Header>
             <Header style={{margin: 0, marginRight: 10}} textAlign='right' size='small'>{`$${calculateOrderTotal()}`}</Header>
-            {hasCheckoutBtn && <Button onClick={() => navigate('/checkout')}>Checkout</Button>}
+            {hasCheckoutBtn && <Button loading={isCheckoutLoading} color="blue" onClick={onClickCheckout}>Checkout</Button>}
         </Sidebar>
     )
 }
