@@ -8,15 +8,25 @@
     margin: 0 10px;
 }
 
+.subtitle {
+    font-size: 16px;
+    margin-bottom: 82px !important;
+    font-weight: 600;
+}
+
 .hero > img {
     height: 300px;
 }
 
-.hero > p {
+.title {
     margin-top: -45px;
     font-weight: 600;
     font-size: 28px;
-    margin-bottom: 82px;
+    margin-bottom: 0;
+}
+
+home-container {
+    padding-bottom: 20px;
 }
 
 @media (max-width:800px) {
@@ -30,11 +40,15 @@
     }
 
     .hero > img {
-        height: 225;
+        height: 225px;
     }
-    .hero > p {
+    .title {
         font-size: 20px;
         margin-top: -35px;
-        margin-bottom: 48px;
+    }
+    .subtitle {
+        margin-bottom: 48px !important;
+        font-size: 12px;
+        margin-top: 10px;
     }
 }

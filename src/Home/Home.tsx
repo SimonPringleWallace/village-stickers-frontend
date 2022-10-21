@@ -73,7 +73,8 @@ const Home = () => {
         <div className='home-container'>
             <div className='hero'>
                 <img src={TrashCan}/>
-                <p> Buying Trash Tags Shouldn't Stink!</p>
+                <p className='title'>Buying Trash Tags Shouldn't Stink!</p>
+                <p className='subtitle'>Get your trash tags delivered for the Village of Red Hook, NY</p>
             </div>
             <div className='tag-container'>
                 {createStickerCards()}
