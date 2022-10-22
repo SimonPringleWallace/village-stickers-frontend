@@ -1,5 +1,7 @@
 import React from 'react';
+import { useNavigate } from 'react-router';
 import { Icon } from 'semantic-ui-react';
+import { ITag } from '../Home/interfaces';
 import { IOrder } from '../interfaces';
 import './header.css'
 
@@ -12,8 +14,9 @@ const style = {
 }
 
 interface HeaderProps {
-    order: IOrder;
-    onCartClick(): void;
+    withCart?: boolean;
+    order?: IOrder;
+    onCartClick?(): void;
 }
 
 const cartStyle = {
@@ -23,10 +26,12 @@ const cartStyle = {
     }
 }
 
-const Header = ({ order, onCartClick }: HeaderProps) => {
-
+const Header = ({ order, onCartClick, withCart=true }: HeaderProps) => {
+const navigate = useNavigate();
     const getCartNumber = () => {
-
+        if(!order) {
+            return '0';
+        }
         const cartItems = Object.values(order).reduce((acc, curr) => acc + curr.quantity, 0)
         
         if(cartItems === 0) {
@@ -37,11 +42,11 @@ const Header = ({ order, onCartClick }: HeaderProps) => {
     const cartNumber = getCartNumber()
     return (
         <div className='header-container'>
-            <div className='home-icon'>
-                Red Hook Village Trash Stickers
+            <div className='home-icon' onClick={() => navigate('/')}>
+                Red Hook Village Trash Tags
             </div>
             <div style={cartStyle} onClick={onCartClick}>
-                <Icon size='large' style={{cursor: 'pointer'}} name="shopping cart"></Icon>
+                {withCart && <Icon size='large' style={{cursor: 'pointer'}} name="shopping cart"></Icon>}
                 {(parseInt(cartNumber) > 0) && <div style={{backgroundColor: 'red', height: '15px', width: '15px', borderRadius: '10px', marginTop: '-3px', color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '10px'}}>
                     {getCartNumber()}
                 </div>}
