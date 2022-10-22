@@ -8,7 +8,6 @@ import { orderContext } from '../state/orderContext';
 import Cart from '../cart/Cart';
 import TrashCan from '../assets/can_of_trash.png';
 import './home.css';
-import { tags } from '../tags';
 
 export const TagContext = React.createContext([] as ITag[]);
 const Home = () => {
@@ -24,6 +23,7 @@ const Home = () => {
         }
         else {
             newOrder[id] = {
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 type: stickers.find(sticker => sticker.id === id)!.title,
                 quantity
             }

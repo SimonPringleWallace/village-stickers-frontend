@@ -4,7 +4,6 @@ import { useOrder } from './hooks/useOrder';
 import { orderContext } from './state/orderContext';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
-import Checkout from './checkout/Checkout';
 import HomePage from './Home/Home';
 import Confirmation from './confirmation/Confirmation';
 

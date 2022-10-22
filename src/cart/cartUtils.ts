@@ -10,6 +10,7 @@ const buildOrderPayload = (order: IOrder, stickers: ITag[]) => {
             id: productId,
             type: order[productId].type,
             quantity: order[productId].quantity,
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             priceKey: stickers.find(sticker => sticker.id == productId)!.priceKey
         })
     })  

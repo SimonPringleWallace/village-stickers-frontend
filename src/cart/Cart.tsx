@@ -1,8 +1,6 @@
 import React, { useContext, useState } from 'react';
-import { useNavigate } from 'react-router';
-import { Sidebar, Menu, Button, Icon, Header } from 'semantic-ui-react';
+import { Sidebar, Menu, Button, Header } from 'semantic-ui-react';
 import CartItem from '../cart-item/CartItem';
-import { TagContext } from '../Home/Home';
 import { ITag } from '../Home/interfaces';
 import { IOrder } from '../interfaces';
 import { orderContext } from '../state/orderContext';
@@ -20,11 +18,8 @@ interface ICartProps {
 const Cart = ({ isSidebarVisible, onHide, stickers, hasCheckoutBtn, isCloseable = true }: ICartProps) => {
     const { order, setCurrentOrder } = useContext(orderContext)
     const [isCheckoutLoading, setIsCheckoutLoading] = useState(false);
-    const navigate = useNavigate();
     
     const onUpdateQuantity = (id: string, direction: 'increment' | 'decrement') => {
-    const currValue = order[id].quantity;
-
 
         if(direction === 'increment') {
             setCurrentOrder({
@@ -62,6 +57,7 @@ const Cart = ({ isSidebarVisible, onHide, stickers, hasCheckoutBtn, isCloseable 
         }
         let total = 0;
         Object.keys(order).forEach((productId: string) => {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             total += stickers.find((tag) => tag.id == productId)!.price * order[productId].quantity
         })
     

@@ -1,17 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
 import { Icon } from 'semantic-ui-react';
-import { ITag } from '../Home/interfaces';
 import { IOrder } from '../interfaces';
 import './header.css'
-
-const style = {
-    display: 'flex',
-    flexDirection: 'row' as const,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: '0 50px',
-}
 
 interface HeaderProps {
     withCart?: boolean;
