@@ -1,5 +1,9 @@
 import React, {useState} from 'react';
-import { Card, Button, Dropdown, SemanticCOLORS, DropdownProps, Icon } from 'semantic-ui-react';
+import {SemanticCOLORS, DropdownProps} from 'semantic-ui-react';
+import Card from 'semantic-ui-react/dist/commonjs/views/Card';
+import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
+import Dropdown from 'semantic-ui-react/dist/commonjs/modules/Dropdown';
+import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
 
 
 interface StickerCardProps {

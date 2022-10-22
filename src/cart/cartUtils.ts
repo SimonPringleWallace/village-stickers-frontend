@@ -3,9 +3,7 @@ import { IOrder } from "../interfaces";
 
 const buildOrderPayload = (order: IOrder, stickers: ITag[]) => {
     const orderPayload = [] as {id: string; type: string; quantity: number, priceKey: string}[];
-    console.log('stick', stickers)
     Object.keys(order).forEach(productId => {
-        console.log(productId)
         orderPayload.push({
             id: productId,
             type: order[productId].type,

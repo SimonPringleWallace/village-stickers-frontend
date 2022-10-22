@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import { Card } from 'semantic-ui-react'
+import Card from 'semantic-ui-react/dist/commonjs/views/Card';
 import { TagContext } from '../Home/Home';
 import QuanityStepper from '../quantity-stepper/QuantityStepper';
 

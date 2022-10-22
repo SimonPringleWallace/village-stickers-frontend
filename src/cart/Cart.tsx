@@ -1,5 +1,9 @@
 import React, { useContext, useState } from 'react';
-import { Sidebar, Menu, Button, Header } from 'semantic-ui-react';
+import Menu from 'semantic-ui-react/dist/commonjs/collections/Menu';
+import Sidebar from 'semantic-ui-react/dist/commonjs/modules/Sidebar';
+import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
+import Header from 'semantic-ui-react/dist/commonjs/elements/Header';
+
 import CartItem from '../cart-item/CartItem';
 import { ITag } from '../Home/interfaces';
 import { IOrder } from '../interfaces';

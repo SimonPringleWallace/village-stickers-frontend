@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Header from '../header/header';
 import StickerCard from '../product-card/Card';
-import { SemanticCOLORS } from 'semantic-ui-react';
 import { ITag } from './interfaces';
 import { IOrder } from '../interfaces';
 import { orderContext } from '../state/orderContext';
@@ -35,7 +34,6 @@ const Home = () => {
             setIsSidebarVisible(true)
         }
     }
-    console.log(stickers)
     const createStickerCards = () => {
         return stickers.map((sticker) => (
             <StickerCard
@@ -44,7 +42,7 @@ const Home = () => {
                 name={sticker.title}
                 unit={sticker.unit}
                 description={sticker.description}
-                color={sticker.color as SemanticCOLORS}
+                color={sticker.color}
                 onAddToCart={onAddToCart}
                 price={sticker.price}
             />
@@ -67,8 +65,6 @@ const Home = () => {
         fetchTags();
         // setStickers(tags)
     }, [])
-
-    console.log(stickers)
 
     return (
         <>

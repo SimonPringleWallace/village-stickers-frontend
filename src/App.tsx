@@ -9,7 +9,6 @@ import Confirmation from './confirmation/Confirmation';
 
 function App() {
   const order = useOrder();
-  console.log('order app', order.order)
 
   const client = new ApolloClient({
     uri: 'https://flyby-gateway.herokuapp.com/',

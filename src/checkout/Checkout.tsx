@@ -1,6 +1,6 @@
-import { findAllByAltText } from '@testing-library/react';
 import React, { useContext, useEffect, useState } from 'react'
-import { Form, Header } from 'semantic-ui-react'
+import Form from 'semantic-ui-react/dist/commonjs/collections/Form';
+import Header from 'semantic-ui-react/dist/commonjs/elements/Header';
 import Cart from '../cart/Cart';
 import { TagContext } from '../Home/Home';
 import { ITag } from '../Home/interfaces';
@@ -24,9 +24,6 @@ const Checkout = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [stickers, setStickers] = useState([] as ITag[])
 
-    console.log('order', order)
-
-
     const handleChange = (key: string, e: React.SyntheticEvent<HTMLElement, Event>, { value }: any) => {
         setUserDetails({
             ...userDetails,
@@ -37,7 +34,6 @@ const Checkout = () => {
     const buildOrderPayload = () => {
         const orderPayload = [] as { id: string; type: string; quantity: number, priceKey: string }[];
         Object.keys(order).forEach(productId => {
-            console.log(stickers.find(sticker => sticker.id == productId))
             orderPayload.push({
                 id: productId,
                 type: order[productId].type,

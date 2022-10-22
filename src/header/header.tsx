@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
-import { Icon } from 'semantic-ui-react';
+import Icon from 'semantic-ui-react/dist/commonjs/elements/Icon';
 import { IOrder } from '../interfaces';
 import RedHook from '../assets/hook.png';
 import './header.css'

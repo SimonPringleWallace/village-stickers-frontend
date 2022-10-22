@@ -1,5 +1,6 @@
 import React from 'react';
-import { Input, Button } from 'semantic-ui-react'
+import Button from 'semantic-ui-react/dist/commonjs/elements/Button';
+import Input from 'semantic-ui-react/dist/commonjs/elements/Input'
 
 interface QuantityStepperProps {
     quantity: number;
