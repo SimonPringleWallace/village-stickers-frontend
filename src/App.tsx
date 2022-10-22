@@ -3,17 +3,11 @@ import './App.css';
 import { useOrder } from './hooks/useOrder';
 import { orderContext } from './state/orderContext';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import HomePage from './Home/Home';
 import Confirmation from './confirmation/Confirmation';
 
 function App() {
   const order = useOrder();
-
-  const client = new ApolloClient({
-    uri: 'https://flyby-gateway.herokuapp.com/',
-    cache: new InMemoryCache(),
-  });
   
   const router = createBrowserRouter([
     {
@@ -32,11 +26,9 @@ function App() {
   
   return (
     <div className="App">
-      <ApolloProvider client={client}>
-        <orderContext.Provider value={order}>
-          <RouterProvider router={router}/>
-        </orderContext.Provider>
-      </ApolloProvider>
+      <orderContext.Provider value={order}>
+        <RouterProvider router={router}/>
+      </orderContext.Provider>
     </div>
   );
 }
