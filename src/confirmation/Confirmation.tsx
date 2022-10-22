@@ -11,7 +11,7 @@ const Confirmation = () => {
                 <h1>Thank you for your order!</h1>
                 <img className='meditation' src={meditate}/>
                 <h2>We'll take it from here. Your trash tags are on the way.</h2>
-                <h3>Questions?<br/>Email us at village-tags@gmail.com</h3>
+                <h3>Questions?<br/>Email us at <a href="mailto: village.tags@gmail.com">village.tags@gmail.com</a></h3>
             </div>
         </>
     )
