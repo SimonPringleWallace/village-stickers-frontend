@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router';
 import { Icon } from 'semantic-ui-react';
 import { IOrder } from '../interfaces';
+import RedHook from '../assets/hook.png';
 import './header.css'
 
 interface HeaderProps {
@@ -33,8 +34,11 @@ const navigate = useNavigate();
     const cartNumber = getCartNumber()
     return (
         <div className='header-container'>
-            <div className='home-icon' onClick={() => navigate('/')}>
-                Red Hook Village Trash Tags
+            <div className="home-icon-container">
+            <img className='red-hook' src={RedHook}/>
+                <div className='home-icon' onClick={() => navigate('/')}>
+                    Red Hook Village Trash Tags
+                </div>
             </div>
             <div style={cartStyle} onClick={onCartClick}>
                 {withCart && <Icon size='large' style={{cursor: 'pointer'}} name="shopping cart"></Icon>}
