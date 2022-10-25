@@ -93,7 +93,7 @@ const Cart = ({ isSidebarVisible, onHide, stickers, hasCheckoutBtn, isCloseable 
 
             <Header style={{marginRight: 10}} textAlign='right' size='medium'>Total</Header>
             <Header style={{margin: 0, marginRight: 10}} textAlign='right' size='small'>{`$${calculateOrderTotal()}`}</Header>
-            {hasCheckoutBtn && <Button loading={isCheckoutLoading} color="blue" onClick={onClickCheckout}>Checkout</Button>}
+            {hasCheckoutBtn && <Button disabled loading={isCheckoutLoading} color="blue" onClick={onClickCheckout}>Checkout</Button>}
         </Sidebar>
     )
 }
